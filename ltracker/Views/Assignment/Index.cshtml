@@ -1,0 +1,60 @@
+﻿@model ICollection<ltracker.Models.AssignmentViewModel>
+
+@{
+    ViewBag.Title = "Index";
+}
+
+<form method="get">
+    <div class="container col-md-3 col-md-offset-9">
+        <p>
+            <select id="dropDownTipo" class="form-control" name="tipo">
+                <option>Persona</option>
+                <option>Curso</option>
+            </select>
+        </p>
+        <p><input type="search" name="searchTerm" class="form-control" placeholder="Ingrese texto de búsqueda..." /></p>
+        <p><input type="submit" value="Buscar" class="btn btn-default" id="btnBuscar" /></p>
+    </div>
+</form>
+
+<h2>Cursos asignados</h2>
+<div class="container">
+    <p>
+        <a class="btn btn-primary" href="@Url.Content("~/Assignment/Create")">Asignar Curso</a>
+    </p>
+    @foreach (var item in Model)
+    {
+        <div class="col-md-3 col-xs-1 col-lg-4">
+            <div class="panel panel-primary">
+                <div class="panel-heading">
+                    <h3 class="panel-title">
+                        @item.Course.Name
+                        @if (item.IsCompleted == true)
+                        {
+                            <span style="color:green; text-align:right" class="glyphicon glyphicon-ok-circle">
+                            </span>
+                        }
+                    </h3>
+
+                </div>
+                <div class="panel-body">
+                    <p>
+                        @item.Individual.Name
+                    </p>
+                    <p>
+                        @item.AssingmentDate.Value.ToShortDateString()
+                    </p>
+                </div>
+                <div class="panel-footer">
+                    <a href="@Url.Content("~/Assignment/Edit")/@item.Id">
+                        Editar
+                        <span class="glyphicon glyphicon-edit">
+
+                        </span>
+                    </a>
+                </div>
+            </div>
+
+        </div>
+    }
+</div>

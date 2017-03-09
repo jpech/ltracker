@@ -1,0 +1,92 @@
+﻿@model ltracker.Models.NewAssignmentsViewModel
+
+@{
+    ViewBag.Title = "Create";
+}
+
+<h2>Create</h2>
+
+
+@using (Html.BeginForm()) 
+{
+    @Html.AntiForgeryToken()
+    
+    <div class="form-horizontal">
+        <h4>NewAssignmentsViewModel</h4>
+        <hr />
+        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+        <div class="form-group">
+            @Html.LabelFor(model => model.AssingmentDate, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.AssingmentDate, new { htmlAttributes = new { @class = "form-control datepicker" } })
+                @Html.ValidationMessageFor(model => model.AssingmentDate, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.IndividualId, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                
+                @Html.DropDownListFor(model => model.IndividualId, Model.IndividualList, new { @class = "form-control" })
+                @Html.ValidationMessageFor(model => model.IndividualId, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.CourseId, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                
+                @Html.DropDownListFor(model => model.CourseId, Model.CourseList, new { @class = "form-control" })
+                @Html.ValidationMessageFor(model => model.CourseId, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            <div class="col-md-offset-2 col-md-10">
+                <input type="submit" value="Create" class="btn btn-default" />
+            </div>
+        </div>
+    </div>
+}
+
+<div>
+    @Html.ActionLink("Back to List", "Index")
+</div>
+
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+
+    <script type="text/javascript">
+
+        var newAssignment = (function () {
+
+            var start = function () {
+                Globalize.culture("es-MX");
+
+                $.validator.methods.date = function (value, element) {
+                    return this.optional(element) || Globalize.parseDate(value);
+                };
+
+                $('.datepicker').datepicker({
+                    format: 'dd/mm/yyyy',
+                    language: 'es-MX',
+                    autoclose: true
+                });
+            }
+
+            var doSave = function () {
+
+            };
+
+            return {
+                start: start
+            }
+
+        }());
+
+        $(function () {
+            newAssignment.start();
+        });
+
+</script>
+}
